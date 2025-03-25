@@ -1,4 +1,5 @@
-import java.security.interfaces.EdECKey;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -98,6 +99,8 @@ public class Knapsack {
          */
 
     selectHeaviest(weights, 700);
+        System.out.println();
+    selectRating(weights, 700);
 
     }
 
@@ -105,7 +108,7 @@ public class Knapsack {
         int currentTotal = 0;
         System.out.println("Selected: ");
 
-        // TreeMap has a descending function
+        // TreeMap in descending order of weight
         for (Map.Entry<Integer, Experiment> experiment : weights.descendingMap().entrySet()){
             if (experiment.getKey() + currentTotal <= maxWeight){
                 currentTotal += experiment.getKey();
@@ -113,5 +116,23 @@ public class Knapsack {
             }
         }
         System.out.println("total weight: " + currentTotal);
+    }
+
+    public static void selectRating(TreeMap<Integer, Experiment> weights, int maxWeight){
+        List<Map.Entry<Integer, Experiment>> list = new ArrayList<>(weights.entrySet());
+        list.sort((entry1, entry2) ->
+                entry2.getValue().getRating() - entry1.getValue().getRating());
+        int currnetTotal = 0;
+        System.out.println("Selected: ");
+
+        // TreeMap in descending order of ratings
+      for (Map.Entry<Integer, Experiment> experiment : list){
+          if (currnetTotal + experiment.getKey() <= maxWeight){
+              currnetTotal += experiment.getKey();
+              System.out.println(experiment);
+          }
+
+        }
+        System.out.println("total weight: " + currnetTotal);
     }
 }
